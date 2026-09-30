@@ -39,7 +39,7 @@ public class IMCController {
         double altura;
 
         try {
-             peso = Double.parseDouble(textoPeso);
+             peso = Double.parseDouble(textoPeso); 
             altura = Double.parseDouble(textoAltura);
             }catch (NumberFormatException ex) {
             escribirError("Error: Datos inválidos");
