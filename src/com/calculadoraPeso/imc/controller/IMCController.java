@@ -42,7 +42,7 @@ public class IMCController {
             
             
         }catch(NumberFormatException nfn){
-            
+            System.out.println("Error, introduce caracteres alfanuméricos");
         }
     }
 }
