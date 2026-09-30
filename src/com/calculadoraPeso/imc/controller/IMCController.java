@@ -39,12 +39,26 @@ public class IMCController {
         double altura;
 
         try {
-            
-            
-            
-            
-        }catch(NumberFormatException nfn){
-            System.out.println("Error, introduce caracteres alfanuméricos");
+             peso = Double.parseDouble(textoPeso);
+            altura = Double.parseDouble(textoAltura);
+            }catch (NumberFormatException ex) {
+            escribirError("Error: Datos inválidos");
+            return;
+        }
+         if (peso <= 0 || altura <= 0) {
+            escribirError("Error: Peso y altura deben ser mayores que 0");
+            return;
+            }
+         
+        double imc = calculadora.calcular(peso, altura);
+        String clasificacion = calculadora.clasificar(imc);
+        
+        lblResultado.setText(String.format("Tu IMC es: %.2f", imc));
+        lblClasificacion.setText("Clasificación: " + clasificacion);        
+        }
+    
+        private void escribirError(String mensaje) {
+        lblResultado.setText("");
+        lblClasificacion.setText(mensaje);
         }
     }
-}
