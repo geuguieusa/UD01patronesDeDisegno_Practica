@@ -140,6 +140,8 @@ public class IMCVista extends javax.swing.JPanel {
     public JTextField getTxtPeso() {
         return txtPeso;
     }
+
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

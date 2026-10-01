@@ -5,30 +5,39 @@ package com.calculadoraPeso.imc.controller;
  * @author Guillermo Eugui Sánchez
  */
 
+
 import com.calculadoraPeso.imc.model.CalculadoraIMC;
 import com.calculadoraPeso.imc.view.IMCVista;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class IMCController {
+import com.calculadoraPeso.imc.model.CalculadoraIMC;
 
+public class IMCController {
     private final CalculadoraIMC calculadora = new CalculadoraIMC();
 
     private final JTextField txtPeso;
     private final JTextField txtAltura;
-    private final JLabel lblClasificacion;
     private final JButton btnCalcular;
     private final JLabel lblResultado;
+    private final JLabel lblClasificacion;
 
     public IMCController(IMCVista vista) {
-        this.txtPeso = vista.getTxtPeso();
-        this.txtAltura = vista.getTxtAltura();
-        this.lblResultado = vista.getLblResultado();
-        this.lblClasificacion = vista.getLblClasificacion();
-        this.btnCalcular = vista.getBtnCalcular();
-        this.btnCalcular.addActionListener(e -> calcularIMC());
+        lblResultado = vista.getLblResultado();
+        lblClasificacion = vista.getLblClasificacion();
+        txtPeso = vista.getTxtPeso();
+        txtAltura = vista.getTxtAltura();
+        btnCalcular = vista.getBtnCalcular();
+
+        this.btnCalcular.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                calcularIMC();
+            }
+        });
     }
 
     private void calcularIMC() {
@@ -39,26 +48,19 @@ public class IMCController {
         double altura;
 
         try {
-             peso = Double.parseDouble(textoPeso); 
+            peso = Double.parseDouble(textoPeso);
             altura = Double.parseDouble(textoAltura);
-            }catch (NumberFormatException ex) {
-            escribirError("Error: Datos inválidos");
+            
+        } catch (NumberFormatException nfn) {
+            lblClasificacion.setText("Error: Introduce solo números válidos");
+            lblResultado.setText("");
             return;
         }
-         if (peso <= 0 || altura <= 0) {
-            escribirError("Error: Peso y altura deben ser mayores que 0");
-            return;
-            }
-         
+
         double imc = calculadora.calcular(peso, altura);
         String clasificacion = calculadora.clasificar(imc);
-        
+
         lblResultado.setText(String.format("Tu IMC es: %.2f", imc));
-        lblClasificacion.setText("Clasificación: " + clasificacion);        
-        }
-    
-        private void escribirError(String mensaje) {
-        lblResultado.setText("");
-        lblClasificacion.setText(mensaje);
-        }
+        lblClasificacion.setText("Clasificación: " + clasificacion);
     }
+}
